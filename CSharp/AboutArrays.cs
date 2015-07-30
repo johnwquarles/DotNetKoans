@@ -15,11 +15,11 @@ namespace DotNetKoans.CSharp
             Assert.Equal(typeof(Object[]), empty_array.GetType());
 
             //Note that you have to explicitly check for subclasses
-                        // Object[] is a specific type of array, namely one that is full of objects.
-                        // below test means that you can cast an empty object array into an Array type.
-                        // ie, Object[] is a subclass (subtype?) of Array.
+                        // #Object[] is a specific type of array, namely one that is full of objects.
+                        // #below test means that you can cast an empty object array into an Array type.
+                        // #ie, Object[] is a subclass (subtype?) of Array.
 
-                        // typeof(BaseClass).IsAssignableFrom(typeof(ExpectedSubclass))
+                        // #typeof(BaseClass).IsAssignableFrom(typeof(ExpectedSubclass))
             Assert.True(typeof(Array).IsAssignableFrom(empty_array.GetType()));
 
             Assert.Equal(0, empty_array.Length);
@@ -29,6 +29,8 @@ namespace DotNetKoans.CSharp
         public void ArrayLiterals()
         {
             //You don't have to specify a type if the arguments can be inferred
+
+            // #ie, I guess if they're the same type, since I had to specify new object[] in Koan(5).
             var array = new [] { 42 };
             Assert.Equal(typeof(int[]), array.GetType());
             Assert.Equal(new int[] { 42 }, array);
@@ -79,10 +81,13 @@ namespace DotNetKoans.CSharp
             var array = new[] { 1, 2 };
             Stack stack = new Stack(array);
             stack.Push("last");
-            Assert.Equal(new[] { "1", "2", "last"}, stack.ToArray());
+            // #ah ok. Stack starts off empty, then array elements are added to it one by one. The top of the stack, when displayed/converted to an array,
+            // #is the front of the array. Hence 1 gets added in first, and then becomes the back element when 2 is added (first in, first out).
+            // #When we push "last", it goes to the front of the stack. It will be the first thing popped out.
+            Assert.Equal(new object[] { "last", 2, 1 }, stack.ToArray());
             var poppedValue = stack.Pop();
-            Assert.Equal(FILL_ME_IN, poppedValue);
-            Assert.Equal(FILL_ME_IN, stack.ToArray());
+            Assert.Equal("last", poppedValue);
+            Assert.Equal(new object[] { 2, 1 }, stack.ToArray());
         }
 
         [Koan(6)]
@@ -96,16 +101,16 @@ namespace DotNetKoans.CSharp
             var list = new LinkedList<string>(array);
 
             list.AddFirst("Say");
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new[] { "Say", "Hello", "World" }, list.ToArray());
 
             list.RemoveLast();
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new[] { "Say", "Hello"}, list.ToArray());
 
             list.RemoveFirst();
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new[] { "Hello"}, list.ToArray());
 
             list.AddAfter(list.Find("Hello"), "World");
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new[] { "Hello", "World"}, list.ToArray());
         }
 
     }

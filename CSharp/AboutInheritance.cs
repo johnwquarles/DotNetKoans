@@ -27,6 +27,14 @@ namespace DotNetKoans.CSharp
             // constructor. Since the only public/protected constructor for a 
             // dog requires a name, a public/protected constructor must also
             // require a Name.
+
+            // # this is a constructor with the same signature as its superclass constructor.
+            // # so we can access the superclass constructor (and we pass in an argument here) with keyword "base".
+
+            // # this was interesting: http://stackoverflow.com/questions/3146152/c-if-a-class-has-two-constructors-what-is-the-best-way-for-these-constructors
+            // # gist is that if you have multiple constructors (with different signatures or else it wouldn't work, I assume),
+            // one can call the other by using :this plus arguments, or no arguments as is applicable.
+
             public Chihuahua(string name) : base(name)
             {
             }
@@ -54,22 +62,23 @@ namespace DotNetKoans.CSharp
         }
 
         [Koan(1)]
+        // # IsAssignableFrom: true if c and the current Type represent the same type, or if the current Type is in the inheritance hierarchy of c, or if the current Type is an interface that c implements, or if c is a generic type parameter and the current Type represents one of the constraints of c. false if none of these conditions are true, or if c is null.
         public void SubclassesHaveTheParentAsAnAncestor()
         {
-            Assert.True(typeof(FillMeIn).IsAssignableFrom(typeof(Chihuahua)));
+            Assert.True(typeof(Dog).IsAssignableFrom(typeof(Chihuahua)));
         }
 
         [Koan(2)]
         public void AllClassesUltimatelyInheritFromAnObject()
         {
-            Assert.True(typeof(FillMeIn).IsAssignableFrom(typeof(Chihuahua)));
+            Assert.True(typeof(System.Object).IsAssignableFrom(typeof(Chihuahua)));
         }
 
         [Koan(3)]
         public void SubclassesInheritBehaviorFromParentClass()
         {
             var chico = new Chihuahua("Chico");
-            Assert.Equal(FILL_ME_IN, chico.Name);
+            Assert.Equal("Chico", chico.Name);
         }
 
         [Koan(4)]

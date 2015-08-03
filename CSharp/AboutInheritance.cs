@@ -41,6 +41,9 @@ namespace DotNetKoans.CSharp
 
             //Unless it doesn't. You have to call the base constructor at some point
             //with a name, but you don't have to have your class conform to that spec:
+
+            // # I guess that if you don't specify a particular method within base (as in below),
+            // # it means to call the method on base with the same signature (here, constructor with no arguments).
             public Chihuahua() : base("Ima Chihuahua")
             {
             }
@@ -85,7 +88,7 @@ namespace DotNetKoans.CSharp
         public void SubclassesAddNewBehavior()
         {
             var chico = new Chihuahua("Chico");
-            Assert.Equal(FILL_ME_IN, chico.Wag());
+            Assert.Equal("Happy", chico.Wag());
 
             //We can search the public methods of an object 
             //instance like this:
@@ -101,16 +104,16 @@ namespace DotNetKoans.CSharp
         public void SubclassesCanModifyExistingBehavior()
         {
             var chico = new Chihuahua("Chico");
-            Assert.Equal(FILL_ME_IN, chico.Bark());
+            Assert.Equal("yip", chico.Bark());
 
             //Note that even if we cast the object back to a dog
             //we still get the Chihuahua's behavior. It truly
             //"is-a" Chihuahua
             Dog dog = chico as Dog;
-            Assert.Equal(FILL_ME_IN, dog.Bark());
+            Assert.Equal("yip", dog.Bark());
 
             var fido = new Dog("Fido");
-            Assert.Equal(FILL_ME_IN, fido.Bark());
+            Assert.Equal("WOOF", fido.Bark());
         }
 
         public class ReallyYippyChihuahua : Chihuahua
@@ -132,7 +135,7 @@ namespace DotNetKoans.CSharp
         public void SubclassesCanRedefineBehaviorThatIsNotVirtual()
         {
             ReallyYippyChihuahua suzie = new ReallyYippyChihuahua("Suzie");
-            Assert.Equal(FILL_ME_IN, suzie.Wag());
+            Assert.Equal("WAG WAG WAG!!", suzie.Wag());
         }
 
         [Koan(7)]
@@ -142,7 +145,11 @@ namespace DotNetKoans.CSharp
             //method did what we defined in our class. But what happens
             //when we do this?
             Chihuahua bennie = new ReallyYippyChihuahua("Bennie");
-            Assert.Equal(FILL_ME_IN, bennie.Wag());
+            Assert.Equal("Happy", bennie.Wag());
+
+            // # so I guess that if the WAGWAGWAG wag method had been an override method,
+            // # it would have stuck with the reallyYippyChihuahua even after
+            // # it'd been downcast to a chihuahua. Since it was "born" (instantiated) with it?
 
             //That's right. The behavior of the object is dependent solely
             //on who you are pretending to be. Unlike when you override a
@@ -163,7 +170,7 @@ namespace DotNetKoans.CSharp
         public void SubclassesCanInvokeParentBehaviorUsingBase()
         {
             var ralph = new BullDog("Ralph");
-            Assert.Equal(FILL_ME_IN, ralph.Bark());
+            Assert.Equal("WOOF, GROWL", ralph.Bark());
         }
 
         public class GreatDane : Dog
@@ -179,7 +186,7 @@ namespace DotNetKoans.CSharp
         public void YouCanCallBaseEvenFromOtherMethods()
         {
             var george = new GreatDane("George");
-            Assert.Equal(FILL_ME_IN, george.Growl());
+            Assert.Equal("WOOF, GROWL", george.Growl());
         }
     }
 }
